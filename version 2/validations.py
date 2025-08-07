@@ -34,7 +34,7 @@ class Validation:
 
 
 class DataValidation:
-    def __new__(cls, *args: tuple[str, Any, type]):
+    def __new__(cls, *args: tuple[str, Any, type]) -> list[str, bool]:
         instance = super().__new__(cls)
         instance.valid = instance._valid(*args)
         return instance.valid

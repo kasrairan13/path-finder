@@ -12,7 +12,7 @@ class Data:
     header: list[str] = field(init=False)
     excluded_dirs: tuple[str] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         self.header = ["depth", "paths", "main_folder", "main_file"]
         list_state = DataValidation(
             ("depth", self.depth, int),
@@ -23,5 +23,5 @@ class Data:
         DataError(*list_state)
 
 
-def get_data(instance: Data):
+def get_data(instance: Data) -> dict:
     return asdict(instance)

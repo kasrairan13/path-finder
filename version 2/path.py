@@ -4,7 +4,7 @@ from sys import path as sys_path
 
 
 class Path:
-    def __new__(cls, depth: int, excluded_dirs: tuple[str]):
+    def __new__(cls, depth: int, excluded_dirs: tuple[str]) -> list[str, int]:
         instance = super().__new__(cls)
 
         instance.depth = depth
@@ -27,13 +27,13 @@ class Path:
         return list_path
     
     @cache
-    def _search_dirs(self, base_path: lib_path, current_depth: int = 0):
+    def _search_dirs(self, base_path: lib_path, current_depth: int = 0) -> None:
         if current_depth < self.depth:
             dirs = self._list_dirs(base_path)
             self.paths.extend(dirs)
             for dir in dirs:
                 self._search_dirs(dir, current_depth + 1)
     
-    def _add_paths(self, paths: list[lib_path]):
+    def _add_paths(self, paths: list[lib_path]) -> None:
         for path in paths:
             sys_path.append(str(path))

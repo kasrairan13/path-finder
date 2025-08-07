@@ -4,7 +4,7 @@ from validations import Validation
 
 
 class File:
-    def __new__(cls, data: dict, path_data: list[int, str]):
+    def __new__(cls, data: dict, path_data: list[int, str]) -> None:
         instance = super().__new__(cls)
 
         instance.create_log_file = data["create_log_file"]
@@ -14,8 +14,10 @@ class File:
 
         if instance.create_log_file:
             instance._write_row()
+        
+        return instance
 
-    def _file_exist(self):
+    def _file_exist(self) -> None:
         if not Validation.file_exists(self.file_name):
             with open(self.file_name, mode="w") as file:
                 csv_file = DictWriter(file, fieldnames=self.header)
@@ -24,7 +26,7 @@ class File:
     def _create_row(self) -> dict:
         return dict(zip(self.header, self.path_data))
 
-    def _write_row(self):
+    def _write_row(self) -> None:
         self._file_exist()
         with open(self.file_name, mode="a") as file:
             csv_file = DictWriter(file, fieldnames=self.header)
