@@ -10,7 +10,7 @@ class Data:
     create_log_file: bool = True
     file_name: str = "log"  # format csv
     header: list[str] = field(init=False)
-    excluded_dirs: tuple[str] = None
+    excluded_dirs: tuple[str] = (".git", "__pycache__", ".venv")
 
     def __post_init__(self) -> None:
         self.header = ["depth", "paths", "main_folder", "main_file"]
