@@ -43,11 +43,9 @@ class GitIgnore:
             yield str(path)
 
     def remove_base_folder(self) -> None:
-        new_list = list()
         for directory in self.complete_paths():
             if directory != str(self.main_folder):
-                new_list.append(directory)
-        self.excluded_dirs = new_list
+                self.excluded_dirs.append(directory)
 
 
 class Path(GitIgnore):
