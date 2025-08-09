@@ -18,8 +18,8 @@ class GitIgnore:
             self.text = self.open_file()
             self.lines = self.get_lines(self.text)
             self.dirs = self.get_dirs(self.lines)
-            self.complete_paths(self.dirs)
-            self.remove_base_folder()
+            self.exc_dirs = self.complete_paths(self.dirs)
+            self.remove_base_folder(self.exc_dirs)
 
     def exists(self) -> bool:
         return path_lib(self.file_name).exists()
@@ -43,11 +43,11 @@ class GitIgnore:
     def complete_paths(self, dirs: Generator) -> Generator:
         for directory in dirs:
             path = f"{self.main_folder / directory[0]}"
-            self.excluded_dirs.append(path)
+            yield path
 
-    def remove_base_folder(self) -> None:
+    def remove_base_folder(self, excluded_dirs: Generator) -> None:
         new_list = list()
-        for directory in self.excluded_dirs:
+        for directory in excluded_dirs:
             if directory != str(self.main_folder):
                 new_list.append(directory)
         self.excluded_dirs = new_list
