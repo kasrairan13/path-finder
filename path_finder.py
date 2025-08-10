@@ -6,17 +6,17 @@ from typing import Generator
 __all__ = []
 
 
-class _GitIgnore:
+class GitIgnore:
     def __init__(self) -> None:
         self.file_name = ".gitignore"
         self.excluded_dirs = list()
 
         if self._exists():
             self.main_file = path_lib(__file__).resolve()
-            self.main_folder = self.main_file.parent
+            self.main_dir = self.main_file.parent
 
             self.text = self._open_file()
-            self._remove_base_folder()
+            self._remove_base_dir()
 
     def _exists(self) -> bool:
         return path_lib(self.file_name).exists()
@@ -39,23 +39,23 @@ class _GitIgnore:
 
     def _complete_paths(self) -> Generator:
         for directory in self._get_dirs():
-            path = self.main_folder / directory[0]
+            path = self.main_dir / directory[0]
             yield str(path)
 
-    def _remove_base_folder(self) -> None:
+    def _remove_base_dir(self) -> None:
         for directory in self._complete_paths():
-            if directory != str(self.main_folder):
+            if directory != str(self.main_dir):
                 self.excluded_dirs.append(directory)
 
 
-class _Path(_GitIgnore):
+class Path(GitIgnore):
     def __init__(self) -> None:
         super().__init__()
 
         self._add()
 
     def _scan_dirs(self) -> Generator:
-        for directory in self.main_folder.rglob('*'):
+        for directory in self.main_dir.rglob('*'):
             directory = str(directory)
             if any(directory.startswith(excluded) for excluded in self.excluded_dirs):
                 continue
@@ -66,4 +66,4 @@ class _Path(_GitIgnore):
             sys_path.append(paths)
 
 
-instance = _Path()
+instance = Path()
