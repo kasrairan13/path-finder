@@ -1,4 +1,4 @@
-## path_finder
+# path_finder
 
 **path_finder** is a small Python tool in one file. It helps you import code from folders outside your current folder.
 
