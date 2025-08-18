@@ -1,6 +1,6 @@
-# path_finder
+# Path Finder
 
-**path_finder** is a small Python tool in one file. It helps you import code from folders outside your current folder.
+**Path finder** is a small Python tool in one file. It helps you import code from folders outside your current folder.
 
 ## What does it do?
 Sometimes in a project, you want to use code from other folders that are not inside your current folder. This tool:
